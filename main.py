@@ -37,12 +37,20 @@ def draw_button(rect, text):                # функция отрисовки 
     text_rect = text_surf.get_rect(center=rect.center)
     screen.blit(text_surf, text_rect)
 
-def move_target(target_img):
-    pass
+def move_target():                  # функция смены координат мишени от времени
+    global complexity, target_y,target_x
+    while True:
+        target_x = random.randint(0, SCREEN_WIDTH - target_width)
+        target_y = random.randint(0, SCREEN_HEIGTH - target_height)
+        time.sleep((1500-100*complexity)/1000)  # после смены координат делаем паузу в выполнении потока
 
 running = True
 
 font = pygame.font.SysFont('couriernew', 20)  # шрифт для очков
+
+# создаем поток для смены координат мишени
+targetmove_thread = threading.Thread(target = move_target,)
+targetmove_thread.start()
 
 while running:
     screen.fill(screen_color)
@@ -66,7 +74,7 @@ while running:
                 screen.blit(target_got, (target_x, target_y)) # если попали, меняем картинку
                 target_x = random.randint(0, SCREEN_WIDTH - target_width)
                 target_y = random.randint(40, SCREEN_HEIGTH - target_height)
-                count += 1*complexity   # увеличиваем колиество очков в зависимости от сложности
+                count += 1*complexity   # увеличиваем количество очков в зависимости от сложности
                 pygame.display.update()
                 pygame.time.delay(300)  # делаем паузу на 300 мс
             elif increase_button.collidepoint(event.pos):   # нажатие кнопки увеличение сложности
@@ -74,14 +82,8 @@ while running:
             elif decrease_button.collidepoint(event.pos):   # нажатие кнопки уменьшения сложности
                 complexity -= 1 if complexity > 1 else 0
 
-    if game_time > (1000+200*complexity) // complexity:
-        target_x = random.randint(0, SCREEN_WIDTH - target_width)
-        target_y = random.randint(0, SCREEN_HEIGTH - target_height)
-        game_time = 0
 
-    screen.blit(target_img, (target_x, target_y))
-    game_time += 1
+    screen.blit(target_img, (target_x,target_y))
     pygame.display.update()
-
 
 pygame.quit()
