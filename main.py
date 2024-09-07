@@ -23,6 +23,17 @@ target_y = random.randint(0, SCREEN_HEIGTH-target_height)
 count = 0
 complexity = 1
 
+# Определяем кнопки
+button_width, button_height = 15, 15
+increase_button = pygame.Rect(181, 33, button_width, button_height)
+decrease_button = pygame.Rect(135, 33, button_width, button_height)
+
+def draw_button(rect, text):
+    pygame.draw.rect(screen, "GRAY", rect)
+    text_surf = font.render(text, True, "BLACK")
+    text_rect = text_surf.get_rect(center=rect.center)
+    screen.blit(text_surf, text_rect)
+
 running = True
 
 while running:
@@ -36,10 +47,23 @@ while running:
                 target_x = random.randint(0, SCREEN_WIDTH - target_width)
                 target_y = random.randint(0, SCREEN_HEIGTH - target_height)
                 count += 1
+            elif increase_button.collidepoint(event.pos):
+                complexity += 1
+            elif decrease_button.collidepoint(event.pos):
+                complexity -= 1
     font = pygame.font.SysFont('couriernew', 20)
     text = font.render("Счет: "+str(count), True, "black")
     screen.blit(text, (10, 10))
     screen.blit(target_img, (target_x, target_y))
+
+    # Рисуем кнопки
+    draw_button(increase_button, "+")
+    draw_button(decrease_button, "-")
+
+    # Отображаем текущее значение счетчика
+    text2 = font.render(f"Сложность:  {complexity}", True, "black")
+    screen.blit(text2, (10, 30))
+
     pygame.display.update()
 
 
