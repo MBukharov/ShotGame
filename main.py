@@ -1,5 +1,7 @@
 import pygame
 import random
+import time
+import threading
 
 pygame.init()
 SCREEN_WIDTH = 800
@@ -34,6 +36,9 @@ def draw_button(rect, text):                # функция отрисовки 
     text_surf = font.render(text, True, "BLACK")
     text_rect = text_surf.get_rect(center=rect.center)
     screen.blit(text_surf, text_rect)
+
+def move_target(target_img):
+    pass
 
 running = True
 
