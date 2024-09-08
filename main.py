@@ -10,9 +10,10 @@ screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGTH))
 screen_color = (random.randint(0,255),random.randint(0,255),random.randint(0,255))
 screen.fill(screen_color)
 
-pygame.display.set_caption("Игра тир")
+
 icon = pygame.image.load("img/cartoon-weapon.png")
 pygame.display.set_icon(icon)
+pygame.display.set_caption("Игра тир")
 
 target_img = pygame.image.load("img/target.png")  # мишень
 target_width = 80
@@ -24,7 +25,6 @@ target_y = random.randint(0, SCREEN_HEIGTH-target_height)
 
 count = 0           # количество очков
 complexity = 1      # сложность игры
-game_time = 0       # переменная для реализации функционала сложности
 
 # Определяем кнопки
 button_width, button_height = 15, 15
