@@ -49,7 +49,7 @@ running = True
 font = pygame.font.SysFont('couriernew', 20)  # шрифт для очков
 
 # создаем поток для смены координат мишени
-targetmove_thread = threading.Thread(target = move_target,)
+targetmove_thread = threading.Thread(target = move_target,daemon=True)
 targetmove_thread.start()
 
 while running:
